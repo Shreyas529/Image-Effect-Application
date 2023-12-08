@@ -10,7 +10,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_driveProject_libraryInterfaces_Bri
     vector< vector<Pixel> > imageVector;
     jsize rows = env->GetArrayLength(image);
     jclass pixelArrayClass, pixelClass;
-
+    float amount1=static_cast<float>(amount);
     for (jsize i = 0; i < rows; ++i) {
         jobjectArray rowArray = (jobjectArray)env->GetObjectArrayElement(image, i);
         jsize cols = env->GetArrayLength(rowArray);

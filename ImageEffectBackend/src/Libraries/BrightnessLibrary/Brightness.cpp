@@ -5,8 +5,6 @@
 using namespace std;
 
 
-
-
 void addValueToPixels(vector<vector<Pixel>>& pixels, float value) {
     for (auto& row : pixels) {
         for (auto& pixel : row) {

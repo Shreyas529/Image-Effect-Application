@@ -10,7 +10,7 @@ vector<vector<double>> generateGaussianKernel(int radius, double sigma) {
         for (int j = -radius; j <= radius; ++j) {
             kernel[i + radius][j + radius] = std::exp(-(i * i + j * j) / (2 * sigma * sigma));
             sum += kernel[i + radius][j + radius];
-        }radius
+        }
     }
     // Normalize the kernel
     for (int i = 0; i < size; ++i) {
