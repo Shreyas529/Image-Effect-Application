@@ -1,6 +1,21 @@
 package com.iiitb.imageEffectApplication.effectImplementations;
-//import com.iiitb.imageEffectApplication.baseEffects.requiredEffect;
+import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 import com.iiitb.imageEffectApplication.libraryInterfaces.BrightnessInterface;
-public class BrightnessEffect {
+import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
+import com.iiitb.imageEffectApplication.service.LoggingService;
+public class BrightnessEffect implements SingleValueParameterizableEffect{
+    private float parameter;
+    public BrightnessEffect(){
     
+    }
+    @Override
+    public void setParameterValue(float parameter)
+    {
+        this.parameter = parameter;
+    }
+    @Override
+    public Pixel[][] apply(Pixel[][] image,String filename,LoggingService logging)
+    {
+        return BrightnessInterface.applyBrightness(image, parameter);
+    }
 }
