@@ -9,9 +9,11 @@ public class LoadNativeLibrary {
     public static void loadNativeLibrary(String libraryName) {
         try {
             // Load the native library from the classpath resource
+            
             InputStream inputStream = LoadNativeLibrary.class.getClassLoader().getResourceAsStream(libraryName);
+            
             File tempFile = File.createTempFile("temp-" + libraryName, "");
-            tempFile.deleteOnExit();
+            // tempFile.deleteOnExit();
             try (FileOutputStream out = new FileOutputStream(tempFile)) {
                 byte[] buffer = new byte[8192];
                 int bytesRead;
@@ -21,8 +23,11 @@ public class LoadNativeLibrary {
             }
 
             // Load the native library from the temporary file
+            
             System.load(tempFile.getAbsolutePath());
+            tempFile.delete();
         } catch (IOException e) {
+            
             e.printStackTrace();
         }
     }

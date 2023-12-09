@@ -1,10 +1,10 @@
-#include "com_iiitb_driveProject_libraryInterfaces_BrightnessInterface.h"
+#include "com_iiitb_imageEffectApplication_libraryInterfaces_BrightnessInterface.h"
 #include "Brightness.h"
 #include "../Pixel.h"
 #include <vector>
 using namespace std;
 
-JNIEXPORT jobjectArray JNICALL Java_com_iiitb_driveProject_libraryInterfaces_BrightnessInterface_applyBrightness
+JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInterfaces_BrightnessInterface_applyBrightness
   (JNIEnv * env, jclass jobj, jobjectArray image, jfloat amount) {
 
     vector< vector<Pixel> > imageVector;
@@ -65,7 +65,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_driveProject_libraryInterfaces_Bri
 
 
 
-
+        addValueToPixels(imageVector,amount);
 
      int nrows = imageVector.size();
         int ncols = imageVector[0].size();

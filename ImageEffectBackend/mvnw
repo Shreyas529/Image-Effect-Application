@@ -53,6 +53,7 @@ fi
 cygwin=false;
 darwin=false;
 mingw=false
+
 case "$(uname)" in
   CYGWIN*) cygwin=true ;;
   MINGW*) mingw=true;;

@@ -1,5 +1,6 @@
 package com.iiitb.imageEffectApplication.service;
 
+import com.iiitb.imageEffectApplication.effectImplementations.*;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
 import com.iiitb.imageEffectApplication.utils.ProcessingUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+
 
 @Service
 public class PhotoEffectService {
@@ -25,9 +27,9 @@ public class PhotoEffectService {
 
 
             // ACTUAL WORK STARTS HERE
-
+            
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
+            Pixel[][] modifiedImage =inputImage; // Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
 
@@ -38,6 +40,7 @@ public class PhotoEffectService {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+        
     }
 
     public ResponseEntity<byte[]> applyBrightnessEffect(float amount, MultipartFile imageFile) {
@@ -45,14 +48,16 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
 
-
-
+            
+            
 
             // ACTUAL WORK STARTS HERE
-
+            BrightnessEffect effect=new BrightnessEffect();
+            effect.setParameterValue(amount);
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
-
+            
+            Pixel[][] modifiedImage =effect.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
+            
             // ACTUAL WORK ENDS HERE
 
 
@@ -208,8 +213,15 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
-
+            SepiaEffect effect=new SepiaEffect();
+            Pixel[][] modifiedImage ;
+            try{
+            modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
+            }
+            catch (Exception e){
+                e.printStackTrace();
+                modifiedImage=inputImage;
+            }
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
