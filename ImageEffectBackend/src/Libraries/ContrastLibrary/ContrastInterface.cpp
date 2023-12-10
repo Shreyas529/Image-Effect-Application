@@ -55,9 +55,8 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInte
 
     // Call the function here
     // TODO
-
-
-
+    float amount1=static_cast<int>(amount);
+multiplyValueToPixels(imageVector,amount);
 
 
 
