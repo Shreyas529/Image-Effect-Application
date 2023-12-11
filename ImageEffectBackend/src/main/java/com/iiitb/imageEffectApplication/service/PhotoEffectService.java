@@ -178,10 +178,10 @@ public class PhotoEffectService {
             String imageName = imageFile.getOriginalFilename();
 
             // ACTUAL WORK STARTS HERE
-
+            InvertEffect effect = new InvertEffect();
+            Pixel[][] modifiedImage ;
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
-
+            modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
