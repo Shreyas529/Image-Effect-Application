@@ -99,7 +99,7 @@ $(CONTRAST_JNI_HEADER): $(CONTRAST_JAVA_SRC)
 
 
 $(FLIP_LIB_NAME): $(FLIP_CPP_SRC) $(FLIP_JNI_HEADER)
-	$(CC) -shared -o $@ $(FLIP_CPP_SRC) -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux
+	$(CC) -shared -o $@ $(FLIP_CPP_SRC) -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -fPIC
 
 $(FLIP_JNI_HEADER): $(FLIP_JAVA_SRC)
 	javac -cp ./src/main/java -h $(FLIP_LIBRARY_DESTINATION) $(FLIP_JAVA_SRC)

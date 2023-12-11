@@ -1,7 +1,7 @@
 #include "com_iiitb_imageEffectApplication_libraryInterfaces_FlipInterface.h"
 #include "Flip.h"
 #include "../Pixel.h"
-#include <vector>
+#include<bits/stdc++.h>
 using namespace std;
 
 JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInterfaces_FlipInterface_applyFlip
@@ -46,9 +46,11 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInte
 
 
 
-
+    int HorizontalFlipValue = static_cast<int>(horizontalFlipValue);
+    int VerticalFlipValue = static_cast<int>(verticalFlipValue);
+    cout<<"In FlipInterface.cpp\n";
     
-    flipImage(imageVector);
+    flipImage(imageVector,HorizontalFlipValue,VerticalFlipValue);
 
 
 

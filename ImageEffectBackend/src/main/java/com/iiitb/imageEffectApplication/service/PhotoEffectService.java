@@ -103,13 +103,17 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
+            FlipEffect flipEffect = new FlipEffect();
+            // System.out.println(verticalFlipValue+" "+horizontalFlipValue);
+            flipEffect.selectOptionValue("horizontalFlipValue",horizontalFlipValue);
+            flipEffect.selectOptionValue("verticalFlipValue", verticalFlipValue);
 
 
 
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
+            Pixel[][] modifiedImage = flipEffect.apply(inputImage,imageName,loggingService); // Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
 
@@ -151,12 +155,11 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-
-
+            GrayScaleEffect grayScaleEffect = new GrayScaleEffect();
+            System.out.println("In grayscale in photoeffectservice.java");
             // ACTUAL WORK STARTS HERE
-
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
+            Pixel[][] modifiedImage = grayScaleEffect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
 
@@ -164,6 +167,7 @@ public class PhotoEffectService {
 
         } catch (IOException e) {
             e.printStackTrace();
+            // System.out.println("bro error in try catch");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
