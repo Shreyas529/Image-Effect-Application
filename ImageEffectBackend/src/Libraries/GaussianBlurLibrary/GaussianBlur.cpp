@@ -21,31 +21,42 @@ vector<vector<double>> generateGaussianKernel(int radius, double sigma) {
 
     return kernel;
 }
-void applyGaussianBlur(vector<vector<Pixel>>&imageVector,float radius)
-{
-    double sigma=radius/3; // the same value as opencv
-    vector<vector<double>> kernel=generateGaussianKernel(static_cast<int>(radius),sigma);
-    int height=imageVector.size();
-    int width=imageVector[0].size();
-    int r=(int)radius;
-    for (int i = r; i < height - r; ++i) {
-        for (int j = r; j < width - r; ++j) {
+void applyGaussianBlur(vector<vector<Pixel>>& imageVector, float radius) {
+    double sigma = radius / 3; // the same value as OpenCV
+    vector<vector<double>> kernel = generateGaussianKernel(static_cast<int>(radius), sigma);
+    
+    int height = imageVector.size();
+    int width = imageVector[0].size();
+    int r = static_cast<int>(radius);
+
+    // Create a padded image vector
+    vector<vector<Pixel>> paddedImageVector(height + 2 * r, vector<Pixel>(width + 2 * r,{255,255,255}));
+
+    // Copy the original image into the center of the padded image
+    for (int i = r; i < height + r; ++i) {
+        for (int j = r; j < width + r; ++j) {
+            paddedImageVector[i][j] = imageVector[i - r][j - r];
+        }
+    }
+
+    // Apply Gaussian blur with padding
+    for (int i = r; i < height + r; ++i) {
+        for (int j = r; j < width + r; ++j) {
             double sumRed = 0.0, sumGreen = 0.0, sumBlue = 0.0;
 
             // Convolve the kernel with the pixel neighborhood
             for (int k = -r; k <= r; ++k) {
                 for (int l = -r; l <= r; ++l) {
-                    sumRed += imageVector[i + k][j + l].r * kernel[k + r][l + r];
-                    sumGreen += imageVector[i + k][j + l].g * kernel[k + r][l + r];
-                    sumBlue += imageVector[i + k][j + l].b * kernel[k + r][l + r];
+                    sumRed += paddedImageVector[i + k][j + l].r * kernel[k + r][l + r];
+                    sumGreen += paddedImageVector[i + k][j + l].g * kernel[k + r][l + r];
+                    sumBlue += paddedImageVector[i + k][j + l].b * kernel[k + r][l + r];
                 }
             }
 
             // Update the pixel in the blurred image
-
-            imageVector[i][j].r = static_cast<int>(min(255,max(0,(int)sumRed)));
-            imageVector[i][j].g = static_cast<int>(min(255,max(0,(int)sumGreen)));
-            imageVector[i][j].b = static_cast<int>(min(255,max(0,(int)sumBlue)));
+            imageVector[i - r][j - r].r = static_cast<int>(min(255, max(0, static_cast<int>(sumRed))));
+            imageVector[i - r][j - r].g = static_cast<int>(min(255, max(0, static_cast<int>(sumGreen))));
+            imageVector[i - r][j - r].b = static_cast<int>(min(255, max(0, static_cast<int>(sumBlue))));
         }
-    }    
+    }
 }
