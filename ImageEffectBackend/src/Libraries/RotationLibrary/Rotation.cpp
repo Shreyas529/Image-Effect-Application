@@ -2,7 +2,7 @@
 #include <vector>
 #include "../Pixel.h"
 using namespace std;
-void rotation(vector <vector<Pixel>> &imageVector, int rotation)
+void applyRotation(vector <vector<Pixel>> &imageVector, int rotation)
 {
     if (rotation == 0)
     {
