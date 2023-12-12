@@ -3,7 +3,7 @@
 #include "../Pixel.h"
 using namespace std;
 
-void sharpen(vector <vector<Pixel>> &imageVector, float amount)
+void applySharpen(vector <vector<Pixel>> &imageVector, float amount)
 {
     vector <vector <int>> sharpen_kernel = {{0,-1,0},{-1,5,-1},{0,-1,0}};
 
