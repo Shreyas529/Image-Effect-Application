@@ -4,10 +4,10 @@
 #include <vector>
 using namespace std;
 
-JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInterfaces_RotationInterface_applyRotation
+JNIEXPORT jobjectArray JNICALL Java_com_iiitb_driveProject_libraryInterfaces_RotationInterface_applyRotation
   (JNIEnv * env, jclass jobj, jobjectArray image, jint value) {
 
-    vector< vector<Pixel> > imageVector;
+    vector<vector<Pixel>> imageVector;
     jsize rows = env->GetArrayLength(image);
     jclass pixelArrayClass, pixelClass;
 
@@ -39,7 +39,6 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInte
 
             env->DeleteLocalRef(pixelObj);
         }
-
         imageVector.push_back(rowVector);
         env->DeleteLocalRef(rowArray);
     }
@@ -56,12 +55,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInte
     // Call the function here
     // TODO
 
-
-
-
-
-
-
+    rotate(imageVector,value);
 
     int nrows = imageVector.size();
     int ncols = imageVector[0].size();
