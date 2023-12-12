@@ -22,6 +22,7 @@ vector<vector<double>> generateGaussianKernel(int radius, double sigma) {
     return kernel;
 }
 void applyGaussianBlur(vector<vector<Pixel>>& imageVector, float radius) {
+    radius=5+radius/10;
     double sigma = radius / 3; // the same value as OpenCV
     vector<vector<double>> kernel = generateGaussianKernel(static_cast<int>(radius), sigma);
     
