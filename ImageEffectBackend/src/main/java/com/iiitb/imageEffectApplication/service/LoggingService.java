@@ -20,7 +20,7 @@ public class LoggingService implements Serializable{
             logs=new ArrayList<LogModel>();
         }
         
-        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        String timeStamp = new SimpleDateFormat("dd/MM/yyyy hh:mm a").format(new java.util.Date());
         
         LogModel log=new LogModel(timeStamp,fileName,effectName,optionValues);
         logs.add(log);
@@ -36,6 +36,7 @@ public class LoggingService implements Serializable{
             logs=(List<LogModel>)ReadAndWrite.ReadObject();
             
         }
+        // System.out.println(logs.get(0).getTimestamp());
         
         return logs;
     }
