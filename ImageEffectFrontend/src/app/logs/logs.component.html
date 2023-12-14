@@ -51,7 +51,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let log of logs">
-          <td>{{ log.timestamp | date:'medium' }}</td>
+          <td>{{ log.timestamp }}</td>
           <td>{{ log.filename }}</td>
           <td>{{ log.effectName }}</td>
           <td>{{ log.optionValues }}</td>
