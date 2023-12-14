@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -60,6 +61,20 @@ public class LoggingService implements Serializable{
     }
 
     public List<LogModel> getLogsBetweenTimestamps(LocalDateTime startTime, LocalDateTime endTime) {
-        return new ArrayList<LogModel>();
+        if (logs == null) {
+            logs = (List<LogModel>) ReadAndWrite.ReadObject();
+        }
+    
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
+
+    List<LogModel> filteredLogs = logs.stream()
+            .filter(log -> {
+                LocalDateTime logTime = LocalDateTime.parse(log.getTimestamp(), formatter);
+                return logTime.isAfter(startTime) && logTime.isBefore(endTime);
+            })
+            .collect(Collectors.toList());
+
+    return filteredLogs;
     }
+    
 }
