@@ -5,115 +5,101 @@
 #include "HueSaturation.h"
 using namespace std;
 
-void rgbToHsv(int r, int g, int b, double &h, double &s) {
-    double R = r / 255.0;
-    double G = g / 255.0;
-    double B = b / 255.0;
+void applyHueSaturation(std::vector<std::vector<Pixel>>& image, float saturationValue, float hueValue) {
+    // Define constants
+    const float PI = 3.14159265f;
+    const float angleToRadians = PI / 180.0f;
 
-    double cmax = max(R, max(G, B));
-    double cmin = min(R, min(G, B));
-    double diff = cmax - cmin;
+    // Calculate angle adjustment for hue
+    float hueAngle = (hueValue / 100.0f) * 360.0f - 180.0f;
 
-    if (cmax == cmin) {
-        h = 0;
-    } else if (cmax == R) {
-        h = fmod(60 * ((G - B) / diff) + 360, 360);
-    } else if (cmax == G) {
-        h = fmod(60 * ((B - R) / diff) + 120, 360);
-    } else if (cmax == B) {
-        h = fmod(60 * ((R - G) / diff) + 240, 360);
-    }
+    // Calculate saturation factor
+    float saturationFactor = saturationValue / 100.0f;
 
-    if (cmax == 0) {
-        s = 0;
-    } else {
-        s = (diff / cmax) * 100;
-    }
-}
-
-void hsvToRgb(double h, double s, int &r, int &g, int &b) {
-    // h = fmod(h, 360.0);
-    // s = max(0.0, min(100.0, s));
-
-    double C = s / 100.0;
-    double X = C * (1 - abs(fmod(h / 60.0, 2) - 1));
-    double m = (1 - C);
-
-    double Rp = 0, Gp = 0, Bp = 0;
-
-    if (h >= 0 && h < 60) {
-        Rp = C;
-        Gp = X;
-    } else if (h >= 60 && h < 120) {
-        Rp = X;
-        Gp = C;
-    } else if (h >= 120 && h < 180) {
-        Gp = C;
-        Bp = X;
-    } else if (h >= 180 && h < 240) {
-        Gp = X;
-        Bp = C;
-    } else if (h >= 240 && h < 300) {
-        Rp = X;
-        Bp = C;
-    } else if (h >= 300 && h < 360) {
-        Rp = C;
-        Bp = X;
-    }
-
-    r = static_cast<int>((Rp + m) * 255);
-    g = static_cast<int>((Gp + m) * 255);
-    b = static_cast<int>((Bp + m) * 255);
-}
-
-void applyHueSaturation(std::vector<std::vector<Pixel>>& imageData, float saturationSliderValue, float hueSliderValue) {
-    double hueAngle = (hueSliderValue / 100.0) * 180.0; // Convert slider value to degrees
-
-    // Hue rotation matrix
-    double cosA = cos(hueAngle * M_PI / 180.0);
-    double sinA = sin(hueAngle * M_PI / 180.0);
-
-    double hueRotationMatrix[9] = {
-        cosA, -sinA, 0,
-        sinA, cosA, 0,
-        0, 0, 1
-    };
-
-    // Apply hue rotation and saturation change to each pixel
-    for (auto& row : imageData) {
+    // Iterate through each pixel in the image
+    for (auto& row : image) {
         for (auto& pixel : row) {
-            double r = pixel.r / 255.0;
-            double g = pixel.g / 255.0;
-            double b = pixel.b / 255.0;
+            // Convert RGB to HSL color space
+            float r = pixel.r / 255.0f;
+            float g = pixel.g / 255.0f;
+            float b = pixel.b / 255.0f;
 
-            // Calculate luminance to differentiate chromatic and grayscale components
-            double luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+            float cmax = fmaxf(fmaxf(r, g), b);
+            float cmin = fminf(fminf(r, g), b);
+            float delta = cmax - cmin;
 
-            // Check if the pixel is black, white, or gray
-            bool isGrayScale = luminance < 0.25 || luminance > 0.95;
-            bool isChromatic = !isGrayScale;
-
-            if (isChromatic) {
-                // Apply hue rotation only to chromatic components
-                double newR = r * hueRotationMatrix[0] + g * hueRotationMatrix[1] + b * hueRotationMatrix[2];
-                double newG = r * hueRotationMatrix[3] + g * hueRotationMatrix[4] + b * hueRotationMatrix[5];
-                double newB = r * hueRotationMatrix[6] + g * hueRotationMatrix[7] + b * hueRotationMatrix[8];
-
-                // Saturate chromatic components
-                double intensity = 0.3 * r + 0.59 * g + 0.11 * b; // Calculate intensity
-
-                newR = intensity + saturationSliderValue / 100.0 * (newR - intensity);
-                newG = intensity + saturationSliderValue / 100.0 * (newG - intensity);
-                newB = intensity + saturationSliderValue / 100.0 * (newB - intensity);
-
-                // Update pixel values
-                pixel.r = static_cast<unsigned char>(std::clamp(newR * 255.0, 0.0, 255.0));
-                pixel.g = static_cast<unsigned char>(std::clamp(newG * 255.0, 0.0, 255.0));
-                pixel.b = static_cast<unsigned char>(std::clamp(newB * 255.0, 0.0, 255.0));
+            float hue = 0.0f;
+            if (delta != 0) {
+                if (cmax == r) {
+                    hue = 60.0f * fmodf((g - b) / delta, 6.0f);
+                } else if (cmax == g) {
+                    hue = 60.0f * (((b - r) / delta) + 2.0f);
+                } else {
+                    hue = 60.0f * (((r - g) / delta) + 4.0f);
+                }
             }
+
+            if (hue < 0.0f) {
+                hue += 360.0f;
+            }
+
+            float lightness = (cmax + cmin) / 2.0f;
+            float saturation = delta == 0 ? 0 : delta / (1 - fabsf(2 * lightness - 1));
+
+            // Apply hue and saturation adjustments
+            hue += hueAngle;
+            if (hue < 0.0f) {
+                hue += 360.0f;
+            }
+
+            saturation *= saturationFactor;
+            if (saturation < 0.0f) {
+                saturation = 0.0f;
+            } else if (saturation > 1.0f) {
+                saturation = 1.0f;
+            }
+
+            // Convert back to RGB color space
+            float chroma = (1 - fabsf(2 * lightness - 1)) * saturation;
+            float huePrime = hue / 60.0f;
+            float x = chroma * (1 - fabsf(fmodf(huePrime, 2.0f) - 1));
+            float m = lightness - chroma / 2.0f;
+
+            float rp, gp, bp;
+            if (huePrime >= 0 && huePrime < 1) {
+                rp = chroma;
+                gp = x;
+                bp = 0;
+            } else if (huePrime >= 1 && huePrime < 2) {
+                rp = x;
+                gp = chroma;
+                bp = 0;
+            } else if (huePrime >= 2 && huePrime < 3) {
+                rp = 0;
+                gp = chroma;
+                bp = x;
+            } else if (huePrime >= 3 && huePrime < 4) {
+                rp = 0;
+                gp = x;
+                bp = chroma;
+            } else if (huePrime >= 4 && huePrime < 5) {
+                rp = x;
+                gp = 0;
+                bp = chroma;
+            } else {
+                rp = chroma;
+                gp = 0;
+                bp = x;
+            }
+
+            pixel.r = static_cast<int>((rp + m) * 255.0f);
+            pixel.g = static_cast<int>((gp + m) * 255.0f);
+            pixel.b = static_cast<int>((bp + m) * 255.0f);
         }
     }
 }
+
+
 
 
 
