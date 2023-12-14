@@ -201,11 +201,11 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            // RotationEffect effect = new RotationEffect();
-            // effect.setParameterValue(value);
+            RotationEffect effect = new RotationEffect();
+            effect.selectOptionValue(null, value);
             
-            // Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
-            Pixel[][] modifiedImage = inputImage;
+            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
+            // Pixel[][] modifiedImage = inputImage;
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
@@ -251,10 +251,10 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
 
-            // ACTUAL WORK ENDS HERE
-
+            SharpenEffect effect = new SharpenEffect();
+            effect.setParameterValue(amount);
+            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual
             return processingUtils.postProcessing(modifiedImage);
 
         } catch (IOException e) {
