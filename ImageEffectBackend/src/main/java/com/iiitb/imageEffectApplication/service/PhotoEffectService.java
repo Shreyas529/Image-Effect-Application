@@ -90,7 +90,10 @@ public class PhotoEffectService {
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
-
+            
+            // effect.setParameterValue(value);
+            
+            // Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); 
         } catch (IOException e) {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -198,11 +201,11 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            RotationEffect effect = new RotationEffect();
-            effect.setParameterValue(value);
+            // RotationEffect effect = new RotationEffect();
+            // effect.setParameterValue(value);
             
-            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
-
+            // Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
+            Pixel[][] modifiedImage = inputImage;
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);

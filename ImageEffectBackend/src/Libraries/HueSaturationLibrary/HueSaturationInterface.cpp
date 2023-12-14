@@ -48,9 +48,9 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInte
 
     // Call the function here
     // TODO
-    float hueValue = static_cast<float> hueValue;
-    float saturationValue = static_cast<float> saturationValue;
-    applyHueSaturation(imageVector, saturationValue, hueValue);
+    float HueValue = static_cast<float> (hueValue);
+    float SaturationValue = static_cast<float> (saturationValue);
+    applyHueSaturation(imageVector, SaturationValue, HueValue);
 
     int nrows = imageVector.size();
     int ncols = imageVector[0].size();

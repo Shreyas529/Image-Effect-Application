@@ -7,8 +7,8 @@ import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
 import com.iiitb.imageEffectApplication.service.LoggingService;
 
 public class HueSaturationEffect implements ParameterizableEffect {
-    float hueValue;
-    float saturationValue;
+    private float hueValue=0;
+    private float saturationValue=0;
 
     public HueSaturationEffect() {
 
@@ -23,8 +23,9 @@ public class HueSaturationEffect implements ParameterizableEffect {
             saturationValue = value;
         }
     }
-
+    @Override
     public Pixel[][] apply(Pixel[][] image, String filename, LoggingService logging) {
+      
         return HueSaturationInterface.applyHueSaturation(image, saturationValue, hueValue);
     }
 

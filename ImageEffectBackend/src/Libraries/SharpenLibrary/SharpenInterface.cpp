@@ -55,8 +55,8 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_driveProject_libraryInterfaces_Sha
 
     // Call the function here
     // TODO
-
-    applySharpen(imageVector,amount);
+    float Amount = static_cast<float> (amount);
+    applySharpen(imageVector,Amount);
 
 
 

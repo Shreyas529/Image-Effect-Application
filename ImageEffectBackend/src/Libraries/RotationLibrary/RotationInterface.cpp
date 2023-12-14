@@ -54,8 +54,8 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_driveProject_libraryInterfaces_Rot
 
     // Call the function here
     // TODO
-
-    applyRotation(imageVector,value);
+    int Value = static_cast<int>(value);
+    applyRotation(imageVector,Value);
 
     int nrows = imageVector.size();
     int ncols = imageVector[0].size();
