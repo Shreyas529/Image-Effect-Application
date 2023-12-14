@@ -12,7 +12,7 @@ public class GrayScaleEffect implements PhotoEffect{
     @Override
     public Pixel[][] apply(Pixel[][] image , String filename , LoggingService logging)
     {
-        System.out.println("In grayscaleeffect.jav in effect implementation");
+        // System.out.println("In grayscaleeffect.jav in effect implementation");
         return GrayscaleInterface.applyGrayscale(image);
     }
     

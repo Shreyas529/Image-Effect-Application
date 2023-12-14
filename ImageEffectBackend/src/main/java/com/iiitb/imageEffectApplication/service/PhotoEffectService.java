@@ -158,7 +158,7 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
             GrayScaleEffect grayScaleEffect = new GrayScaleEffect();
-            System.out.println("In grayscale in photoeffectservice.java");
+            // System.out.println("In grayscale in photoeffectservice.java");
             // ACTUAL WORK STARTS HERE
             // TODO
             Pixel[][] modifiedImage = grayScaleEffect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
