@@ -56,7 +56,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_driveProject_libraryInterfaces_Sha
     // Call the function here
     // TODO
 
-    sharpen(imageVector,amount);
+    applySharpen(imageVector,amount);
 
 
 
