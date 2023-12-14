@@ -1,6 +1,8 @@
 package com.iiitb.imageEffectApplication.model;
 
-public class LogModel {
+import java.io.Serializable;
+
+public class LogModel implements Serializable{
     private String timestamp; // The time at which the effect was applied
     private String filename; // The name of the file on which the effect is applied
     private String effectName; // The name of the effect applied
