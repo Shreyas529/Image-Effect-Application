@@ -67,8 +67,8 @@ void hsvToRgb(double h, double s, int &r, int &g, int &b) {
 }
 
 void applyHueSaturation(vector<vector<Pixel>> &imageData, float saturationAmount, float hueAmount) {
-    saturationAmount = saturationAmount/5; 
-    hueAmount =  hueAmount/5;
+    saturationAmount = saturationAmount;    //range : 0 - 100
+    hueAmount =  hueAmount;                 //range : 0 - 100
     for (auto &row : imageData) {
         for (auto &pixel : row) {
             double h, s;
