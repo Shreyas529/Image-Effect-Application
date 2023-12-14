@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
-
 @Service
 public class PhotoEffectService {
 
@@ -20,19 +19,25 @@ public class PhotoEffectService {
     @Autowired
     private LoggingService loggingService;
 
-    public ResponseEntity<byte[]> applyHueSaturationEffect(float hueAmount, float saturationAmount, MultipartFile imageFile) {
+    public ResponseEntity<byte[]> applyHueSaturationEffect(float hueAmount, float saturationAmount,
+            MultipartFile imageFile) {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
 
-
             // ACTUAL WORK STARTS HERE
-            
+
             // TODO
-            Pixel[][] modifiedImage =inputImage; // Replace this with actual modified image
+            HueSaturationEffect huesaturationEffect = new HueSaturationEffect();
+            huesaturationEffect.setParameter("hueValue", hueAmount);
+            huesaturationEffect.setParameter("saturationValue", saturationAmount);
+
+            Pixel[][] modifiedImage = huesaturationEffect.apply(inputImage, imageName, loggingService); // Replace this
+                                                                                                        // with actual
+                                                                                                        // modified
+                                                                                                        // image
 
             // ACTUAL WORK ENDS HERE
-
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -40,7 +45,7 @@ public class PhotoEffectService {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        
+
     }
 
     public ResponseEntity<byte[]> applyBrightnessEffect(float amount, MultipartFile imageFile) {
@@ -48,19 +53,15 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
 
-            
-            
-
             // ACTUAL WORK STARTS HERE
-            BrightnessEffect effect=new BrightnessEffect();
+            BrightnessEffect effect = new BrightnessEffect();
             effect.setParameterValue(amount);
             // TODO
-            
-            Pixel[][] modifiedImage =effect.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
-            
+
+            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService);// Replace this with actual
+                                                                                          // modified image
+
             // ACTUAL WORK ENDS HERE
-
-
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -75,21 +76,18 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
 
-
-
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            
-            ContrastEffect effect=new ContrastEffect();
+
+            ContrastEffect effect = new ContrastEffect();
             effect.setParameterValue(amount);
             // TODO
-            
-            Pixel[][] modifiedImage =effect.apply(inputImage, imageName, loggingService);// Replace this with actual modified image
-            
+
+            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService);// Replace this with actual
+                                                                                          // modified image
+
             // ACTUAL WORK ENDS HERE
-
-
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -99,26 +97,23 @@ public class PhotoEffectService {
         }
     }
 
-    public ResponseEntity<byte[]> applyFlipEffect(MultipartFile imageFile, int horizontalFlipValue, int verticalFlipValue) {
+    public ResponseEntity<byte[]> applyFlipEffect(MultipartFile imageFile, int horizontalFlipValue,
+            int verticalFlipValue) {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
             FlipEffect flipEffect = new FlipEffect();
             // System.out.println(verticalFlipValue+" "+horizontalFlipValue);
-            flipEffect.selectOptionValue("horizontalFlipValue",horizontalFlipValue);
+            flipEffect.selectOptionValue("horizontalFlipValue", horizontalFlipValue);
             flipEffect.selectOptionValue("verticalFlipValue", verticalFlipValue);
-
-
 
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = flipEffect.apply(inputImage,imageName,loggingService); // Replace this with actual modified image
+            Pixel[][] modifiedImage = flipEffect.apply(inputImage, imageName, loggingService); // Replace this with
+                                                                                               // actual modified image
 
             // ACTUAL WORK ENDS HERE
-
-
-
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -133,17 +128,15 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
 
-
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            GaussianEffect effect=new GaussianEffect();
+            GaussianEffect effect = new GaussianEffect();
             effect.setParameterValue(radius);
-            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
+            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual
+                                                                                           // modified image
 
             // ACTUAL WORK ENDS HERE
-
-
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -161,7 +154,9 @@ public class PhotoEffectService {
             System.out.println("In grayscale in photoeffectservice.java");
             // ACTUAL WORK STARTS HERE
             // TODO
-            Pixel[][] modifiedImage = grayScaleEffect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
+            Pixel[][] modifiedImage = grayScaleEffect.apply(inputImage, imageName, loggingService); // Replace this with
+                                                                                                    // actual modified
+                                                                                                    // image
 
             // ACTUAL WORK ENDS HERE
 
@@ -181,9 +176,10 @@ public class PhotoEffectService {
 
             // ACTUAL WORK STARTS HERE
             InvertEffect effect = new InvertEffect();
-            Pixel[][] modifiedImage ;
+            Pixel[][] modifiedImage;
             // TODO
-            modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
+            modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified
+                                                                                 // image
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
@@ -199,14 +195,12 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
 
-
             // ACTUAL WORK STARTS HERE
 
             // TODO
             Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
-
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -224,14 +218,14 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            SepiaEffect effect=new SepiaEffect();
-            Pixel[][] modifiedImage ;
-            try{
-            modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
-            }
-            catch (Exception e){
+            SepiaEffect effect = new SepiaEffect();
+            Pixel[][] modifiedImage;
+            try {
+                modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual
+                                                                                     // modified image
+            } catch (Exception e) {
                 e.printStackTrace();
-                modifiedImage=inputImage;
+                modifiedImage = inputImage;
             }
             // ACTUAL WORK ENDS HERE
 

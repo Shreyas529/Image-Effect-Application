@@ -4,20 +4,22 @@
 #include <vector>
 using namespace std;
 
-JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInterfaces_HueSaturationInterface_applyHueSaturation
-  (JNIEnv * env, jclass jobj, jobjectArray image, jfloat saturationValue, jfloat hueValue) {
+JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInterfaces_HueSaturationInterface_applyHueSaturation(JNIEnv *env, jclass jobj, jobjectArray image, jfloat saturationValue, jfloat hueValue)
+{
 
-    vector< vector<Pixel> > imageVector;
+    vector<vector<Pixel>> imageVector;
     jsize rows = env->GetArrayLength(image);
     jclass pixelArrayClass, pixelClass;
 
-    for (jsize i = 0; i < rows; ++i) {
+    for (jsize i = 0; i < rows; ++i)
+    {
         jobjectArray rowArray = (jobjectArray)env->GetObjectArrayElement(image, i);
         jsize cols = env->GetArrayLength(rowArray);
         pixelArrayClass = env->GetObjectClass(rowArray);
 
         vector<Pixel> rowVector;
-        for (jsize j = 0; j < cols; ++j) {
+        for (jsize j = 0; j < cols; ++j)
+        {
             jobject pixelObj = env->GetObjectArrayElement(rowArray, j);
 
             // Extract r, g, b values from Pixel object
@@ -44,38 +46,23 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInte
         env->DeleteLocalRef(rowArray);
     }
 
-
-
-
-
-
-
-
-
-
     // Call the function here
     // TODO
-
-
-
-
-
-
-
-
-
-
-
+    float hueValue = static_cast<float> hueValue;
+    float saturationValue = static_cast<float> saturationValue;
+    applyHueSaturation(imageVector, saturationValue, hueValue);
 
     int nrows = imageVector.size();
     int ncols = imageVector[0].size();
     jobjectArray resultArray = env->NewObjectArray(nrows, pixelArrayClass, nullptr);
 
-    for (jsize i = 0; i < nrows; ++i) {
+    for (jsize i = 0; i < nrows; ++i)
+    {
         jsize cols = imageVector[i].size();
         jobjectArray rowArray = env->NewObjectArray(ncols, pixelClass, nullptr);
 
-        for (jsize j = 0; j < ncols; ++j) {
+        for (jsize j = 0; j < ncols; ++j)
+        {
             const Pixel &pixel = imageVector[i][j];
             jobject pixelObj = env->AllocObject(pixelClass);
 
