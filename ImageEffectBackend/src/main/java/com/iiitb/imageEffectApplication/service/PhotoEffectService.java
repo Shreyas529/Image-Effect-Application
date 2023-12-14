@@ -52,15 +52,19 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-
+            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Brightness Effect","amount ="+Float.toString(amount));                                                      // modified image
+            thread.start();
             // ACTUAL WORK STARTS HERE
             BrightnessEffect effect = new BrightnessEffect();
             effect.setParameterValue(amount);
             // TODO
 
             Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService);// Replace this with actual
-                                                                                          // modified image
+            
+            while(thread.isAlive())
+            {
 
+            }
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
@@ -138,7 +142,6 @@ public class PhotoEffectService {
             effect.setParameterValue(radius);
             Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual
                                                                                            // modified image
-
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
@@ -281,5 +284,25 @@ public class PhotoEffectService {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+}
+class ExecuteLoggingService extends Thread{
+    private LoggingService loggingService;
+    private String filename;
+    private String effectName;
+    private String optionValues;
+
+    public ExecuteLoggingService(LoggingService loggingService,String filename,String effectName,String optionValues)
+    {
+        this.loggingService=loggingService;
+        this.filename=filename;
+        this.effectName=effectName;
+        this.optionValues=optionValues;
+
+    }
+    @Override
+    public void run()
+    {
+       loggingService.addLog(filename,effectName,optionValues);
     }
 }

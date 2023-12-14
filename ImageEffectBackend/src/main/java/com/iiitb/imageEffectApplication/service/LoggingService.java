@@ -2,6 +2,7 @@ package com.iiitb.imageEffectApplication.service;
 import com.iiitb.imageEffectApplication.model.LogModel;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,14 +12,16 @@ import com.iiitb.imageEffectApplication.ReadingAndWriting.ReadAndWrite;
 
 
 @Service
-public class LoggingService {
-    private List<LogModel> logs=(List<LogModel>)ReadAndWrite.ReadObject();
+public class LoggingService implements Serializable{
+    private List<LogModel> logs=null;
     public void addLog(String fileName, String effectName, String optionValues) {
         if(logs==null)
         {
             logs=new ArrayList<LogModel>();
         }
+        
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        
         LogModel log=new LogModel(timeStamp,fileName,effectName,optionValues);
         logs.add(log);
         ReadAndWrite.WriteObject(logs);
@@ -27,6 +30,13 @@ public class LoggingService {
     }
 
     public List<LogModel> getAllLogs() {
+        
+        if(logs==null)
+        {
+            logs=(List<LogModel>)ReadAndWrite.ReadObject();
+            
+        }
+        
         return logs;
     }
 
@@ -35,7 +45,7 @@ public class LoggingService {
         List<LogModel> effects=new ArrayList<LogModel>();
         for(LogModel log:logs)
         {
-            if(log.getEffectName().equals(effectName))
+            if(log.getEffectName().equalsIgnoreCase(effectName))
             {
                 effects.add(log);
             }
