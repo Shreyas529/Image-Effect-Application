@@ -1,5 +1,4 @@
 package com.iiitb.imageEffectApplication.service;
-
 import com.iiitb.imageEffectApplication.effectImplementations.*;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
 import com.iiitb.imageEffectApplication.utils.ProcessingUtils;
@@ -9,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-
+import com.iiitb.imageEffectApplication.Threading.*;
 @Service
 public class PhotoEffectService {
 
@@ -26,8 +25,6 @@ public class PhotoEffectService {
             String imageName = imageFile.getOriginalFilename();
 
             // ACTUAL WORK STARTS HERE
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Hue Saturation Effect","hue value ="+Float.toString(hueAmount)+"saturationValue ="+Float.toString(saturationAmount));                                                      // modified image
-            thread.start();
 
             // TODO
             HueSaturationEffect huesaturationEffect = new HueSaturationEffect();
@@ -35,14 +32,9 @@ public class PhotoEffectService {
             huesaturationEffect.setParameter("saturationValue", saturationAmount);
 
             Pixel[][] modifiedImage = huesaturationEffect.apply(inputImage, imageName, loggingService); // Replace this
-                                                                                                        // with actual
-                                                                                                        // modified
-                                                                                                        // image
+                                                                                                        // with actual                                                                                  // modified
+                                                                                                      // image
                                                                                                                     
-            while(thread.isAlive())
-            {
-
-            }
 
             // ACTUAL WORK ENDS HERE
 
@@ -287,17 +279,16 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-<<<<<<< HEAD
-=======
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
-            while(thread.isAlive()){}
+        // Replace this with actual modified image
+            
             // ACTUAL WORK ENDS HERE
->>>>>>> 0cdfb66a4502c4e7dacd2412038534a571977381
 
             SharpenEffect effect = new SharpenEffect();
             effect.setParameterValue(amount);
-            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual
+            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); 
+            while(thread.isAlive()){}// Replace this with actual
             return processingUtils.postProcessing(modifiedImage);
+            
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -325,27 +316,4 @@ public class PhotoEffectService {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-<<<<<<< HEAD
-=======
-}
-class ExecuteLoggingService extends Thread{
-    private LoggingService loggingService;
-    private String filename;
-    private String effectName;
-    private String optionValues;
-
-    public ExecuteLoggingService(LoggingService loggingService,String filename,String effectName,String optionValues)
-    {
-        this.loggingService=loggingService;
-        this.filename=filename;
-        this.effectName=effectName;
-        this.optionValues=optionValues;
-
-    }
-    @Override
-    public void run()
-    {
-       loggingService.addLog(filename,effectName,optionValues);
-    }
->>>>>>> 0cdfb66a4502c4e7dacd2412038534a571977381
 }
