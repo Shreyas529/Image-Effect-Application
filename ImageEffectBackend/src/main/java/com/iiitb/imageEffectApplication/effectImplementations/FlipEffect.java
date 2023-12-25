@@ -1,4 +1,5 @@
 package com.iiitb.imageEffectApplication.effectImplementations;
+import com.iiitb.imageEffectApplication.Threading.ExecuteLoggingService;
 import com.iiitb.imageEffectApplication.baseEffects.DiscreteEffect;
 //import com.iiitb.imageEffectApplication.baseEffects.requiredEffect;
 // import com.iiitb.imageEffectApplication.baseEffects.DiscreteEffect;
@@ -31,6 +32,9 @@ public class FlipEffect implements DiscreteEffect{
     public Pixel[][] apply(Pixel[][] image,String filename,LoggingService logging)
     {
         // System.out.println("Calling the apply flip in FlipEffect.java");
+        ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Flip Effect","Horizontal Flip value = " + Float.toString(horizontalFlipValue)+ " Vertical Flip Value ="+ Float.toString(verticalFlipValue));                                                      // modified image
+        thread.start();
+        while(thread.isAlive()){}
         return FlipInterface.applyFlip(image, horizontalFlipValue, verticalFlipValue);
     }
 

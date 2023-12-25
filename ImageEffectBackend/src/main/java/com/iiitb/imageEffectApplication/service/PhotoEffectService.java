@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
-import com.iiitb.imageEffectApplication.Threading.*;
 @Service
 public class PhotoEffectService {
 
@@ -51,8 +50,7 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Brightness Effect","amount ="+Float.toString(amount));                                                      // modified image
-            thread.start();
+
             // ACTUAL WORK STARTS HERE
             BrightnessEffect effect = new BrightnessEffect();
             effect.setParameterValue(amount);
@@ -60,10 +58,6 @@ public class PhotoEffectService {
 
             Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService);// Replace this with actual
             
-            while(thread.isAlive())
-            {
-
-            }
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
@@ -78,8 +72,6 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Contrast Effect","Contrast value ="+Float.toString(amount));                                                      // modified image
-            thread.start();
 
             // ACTUAL WORK STARTS HERE
 
@@ -92,12 +84,7 @@ public class PhotoEffectService {
             Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService);// Replace this with actual
                                                                                           // modified image
             
-            while(thread.isAlive())
-            {
-
-            }
-
-            // ACTUAL WORK ENDS HERE
+                        // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
             
@@ -116,8 +103,6 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
             FlipEffect flipEffect = new FlipEffect();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Flip Effect","Horizontal Flip value ="+Float.toString(horizontalFlipValue)+ "Vertical Flip Value ="+ Float.toString(verticalFlipValue));                                                      // modified image
-            thread.start();
 
             // System.out.println(verticalFlipValue+" "+horizontalFlipValue);
             flipEffect.selectOptionValue("horizontalFlipValue", horizontalFlipValue);
@@ -130,7 +115,6 @@ public class PhotoEffectService {
                                                                                                // actual modified image
 
             // ACTUAL WORK ENDS HERE
-            while(thread.isAlive()){}
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -144,8 +128,7 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Gaussion Blur Effect","Blur Radius ="+Float.toString(radius));                                                      // modified image
-            thread.start();
+
 
             // ACTUAL WORK STARTS HERE
 
@@ -154,8 +137,7 @@ public class PhotoEffectService {
             effect.setParameterValue(radius);
             Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual
                                                                                            // modified image
-            while(thread.isAlive()){}
-            // ACTUAL WORK ENDS HERE
+                                                                                        // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
 
@@ -170,8 +152,6 @@ public class PhotoEffectService {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
             GrayScaleEffect grayScaleEffect = new GrayScaleEffect();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Grayscale Effect","None");                                                      // modified image
-            thread.start();
             // System.out.println("In grayscale in photoeffectservice.java");
             // ACTUAL WORK STARTS HERE
             // TODO
@@ -180,8 +160,6 @@ public class PhotoEffectService {
                                                                                                     // image
 
             // ACTUAL WORK ENDS HERE
-            while(thread.isAlive()){}
-
             return processingUtils.postProcessing(modifiedImage);
 
         } catch (IOException e) {
@@ -195,8 +173,7 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Invert Effect","None");                                                      // modified image
-            thread.start();
+
 
             // ACTUAL WORK STARTS HERE
             InvertEffect effect = new InvertEffect();
@@ -206,7 +183,6 @@ public class PhotoEffectService {
                                                                                  // image
             
                                                                                  // ACTUAL WORK ENDS HERE
-            while(thread.isAlive()){}
             return processingUtils.postProcessing(modifiedImage);
 
         } catch (IOException e) {
@@ -242,9 +218,6 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Sepia Effect","None");                                                      // modified image
-            thread.start();
-
             // ACTUAL WORK STARTS HERE
 
             // TODO
@@ -257,7 +230,6 @@ public class PhotoEffectService {
                 e.printStackTrace();
                 modifiedImage = inputImage;
             }
-            while(thread.isAlive()){}
             // ACTUAL WORK ENDS HERE
 
             return processingUtils.postProcessing(modifiedImage);
@@ -272,8 +244,6 @@ public class PhotoEffectService {
         try {
             Pixel[][] inputImage = processingUtils.preprocessing(imageFile);
             String imageName = imageFile.getOriginalFilename();
-            ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, imageName,"Sharpen Effect","Sharpen value ="+Float.toString(amount));                                                      // modified image
-            thread.start();
 
 
             // ACTUAL WORK STARTS HERE
@@ -286,7 +256,6 @@ public class PhotoEffectService {
             SharpenEffect effect = new SharpenEffect();
             effect.setParameterValue(amount);
             Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); 
-            while(thread.isAlive()){}// Replace this with actual
             return processingUtils.postProcessing(modifiedImage);
             
 

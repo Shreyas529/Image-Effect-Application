@@ -26,7 +26,7 @@ public class HueSaturationEffect implements ParameterizableEffect {
     }
     @Override
     public Pixel[][] apply(Pixel[][] image, String filename, LoggingService logging) {
-        ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Hue Saturation Effect","hue value ="+Float.toString(hueValue)+"saturationValue ="+Float.toString(saturationValue));                                                      // modified image
+        ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Hue Saturation Effect","hue value = "+ Float.toString(hueValue) + " saturationValue = "  + Float.toString(saturationValue));                                                      // modified image
         thread.start();
         while(thread.isAlive())
         {}

@@ -1,4 +1,5 @@
 package com.iiitb.imageEffectApplication.effectImplementations;
+import com.iiitb.imageEffectApplication.Threading.ExecuteLoggingService;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 import com.iiitb.imageEffectApplication.libraryInterfaces.BrightnessInterface;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
@@ -16,6 +17,12 @@ public class BrightnessEffect implements SingleValueParameterizableEffect{
     @Override
     public Pixel[][] apply(Pixel[][] image,String filename,LoggingService logging)
     {
+        ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Brightness Effect","amount = " + Float.toString(parameter));                                                      // modified image
+        thread.start();
+        while(thread.isAlive())
+        {
+
+        }
         return BrightnessInterface.applyBrightness(image, parameter);
     }
 }

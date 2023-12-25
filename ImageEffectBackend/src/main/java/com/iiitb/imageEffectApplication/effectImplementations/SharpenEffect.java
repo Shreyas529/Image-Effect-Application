@@ -1,4 +1,5 @@
 package com.iiitb.imageEffectApplication.effectImplementations;
+import com.iiitb.imageEffectApplication.Threading.ExecuteLoggingService;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
 //import com.iiitb.imageEffectApplication.baseEffects.requiredEffect;
@@ -15,6 +16,9 @@ public class SharpenEffect implements SingleValueParameterizableEffect{
     }
 
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService){
+        ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, fileName,"Sharpen Effect","Sharpen value = " + Float.toString(parameterValue));                                                      // modified image
+        thread.start();
+        while(thread.isAlive()){}
         return SharpenInterface.applySharpen(image, parameterValue);
     }   
 }

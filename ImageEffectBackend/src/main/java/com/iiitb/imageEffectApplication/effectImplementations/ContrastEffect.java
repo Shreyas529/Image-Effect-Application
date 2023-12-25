@@ -1,4 +1,5 @@
 package com.iiitb.imageEffectApplication.effectImplementations;
+import com.iiitb.imageEffectApplication.Threading.ExecuteLoggingService;
 //import com.iiitb.imageEffectApplication.baseEffects.requiredEffect;
 import com.iiitb.imageEffectApplication.baseEffects.SingleValueParameterizableEffect;
 
@@ -19,6 +20,9 @@ public class ContrastEffect implements SingleValueParameterizableEffect{
     @Override
     public Pixel[][] apply(Pixel[][] image,String filename,LoggingService logging)
     {
+        ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Contrast Effect","Contrast value = " + Float.toString(parameter));                                                      // modified image
+        thread.start();
+        while(thread.isAlive()){}
         return ContrastInterface.applyContrast(image, parameter);
     }
 }

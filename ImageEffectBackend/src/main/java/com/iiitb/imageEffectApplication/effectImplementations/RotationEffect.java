@@ -1,4 +1,5 @@
 package com.iiitb.imageEffectApplication.effectImplementations;
+import com.iiitb.imageEffectApplication.Threading.ExecuteLoggingService;
 import com.iiitb.imageEffectApplication.baseEffects.DiscreteEffect;
 import com.iiitb.imageEffectApplication.libraryInterfaces.RotationInterface;
 import com.iiitb.imageEffectApplication.libraryInterfaces.Pixel;
@@ -20,6 +21,9 @@ public class RotationEffect implements DiscreteEffect{
     public Pixel[][] apply(Pixel[][] image,String filename,LoggingService logging)
     {
         // System.out.println("rotation?"+value);
+        ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Rotation Effect","Rotation Value = " + Float.toString(value));                                                      // modified image
+        thread.start();
+        while(thread.isAlive()){}
         return RotationInterface.applyRotation(image, this.value);
     }
 }
