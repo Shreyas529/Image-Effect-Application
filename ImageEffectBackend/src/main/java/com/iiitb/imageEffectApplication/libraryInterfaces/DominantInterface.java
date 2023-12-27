@@ -5,6 +5,6 @@ public class DominantInterface {
         String libraryPath = "DominantLib";
         LoadNativeLibrary.loadNativeLibrary(libraryPath);
     }
-    public static native Pixel[][] applyDominant(Pixel[][] image);
-}
 
+    public static native Pixel[][] applyDominantColor(Pixel[][] image);
+}
