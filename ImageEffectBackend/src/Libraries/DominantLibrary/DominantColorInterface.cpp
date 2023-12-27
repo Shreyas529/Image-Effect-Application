@@ -3,7 +3,7 @@
 #include "../Pixel.h"
 #include<bits/stdc++.h>
 using namespace std;
-JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInterfaces_DominantInterface_applyDominant
+JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInterfaces_DominantInterface_applyDominantColor
   (JNIEnv * env, jclass jobj, jobjectArray image){
     vector< vector<Pixel> > imageVector;
     jsize rows = env->GetArrayLength(image);
@@ -46,6 +46,7 @@ JNIEXPORT jobjectArray JNICALL Java_com_iiitb_imageEffectApplication_libraryInte
     
     // Call the function here
     // TODO
+    applyDominantColor(imageVector);
     int nrows = imageVector.size();
     int ncols = imageVector[0].size();
     jobjectArray resultArray = env->NewObjectArray(nrows, pixelArrayClass, nullptr);

@@ -5,5 +5,5 @@
 using namespace std;
 void applyDominantColor(vector<vector<Pixel>> &);
 int getHue(int, int, int);
-hueToRgb(double, int &, int &, int &);
+void hueToRgb(double, int &, int &, int &);
 #endif

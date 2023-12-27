@@ -64,7 +64,7 @@ SHARPEN_LIB_NAME = ./src/main/resources/SharpenLib
 DOMINANT_LIBRARY_DESTINATION=./src/Libraries/DominantLibrary 
 DOMINANT_CPP_SRC=./src/Libraries/DominantLibrary/DominantColor.cpp ./src/Libraries/DominantLibrary/DominantColorInterface.cpp 
 DOMINANT_JAVA_SRC=./src/main/java/com/iiitb/imageEffectApplication/libraryInterfaces/DominantInterface.java
-DOMINANT_JNI_HEADER= ./src/Libraries/SharpenLibrary/com_iiitb_imageEffectApplication_libraryInterfaces_DominantInterface.h 
+DOMINANT_JNI_HEADER= ./src/Libraries/DominantLibrary/com_iiitb_imageEffectApplication_libraryInterfaces_DominantInterface.h 
 DOMINANT_LIB_NAME = ./src/main/resources/DominantLib
 
 

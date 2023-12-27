@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+
 @Service
 public class PhotoEffectService {
 
@@ -274,7 +275,8 @@ public class PhotoEffectService {
             // ACTUAL WORK STARTS HERE
 
             // TODO
-            Pixel[][] modifiedImage = inputImage; // Replace this with actual modified image
+            DominantColorEffect effect=new DominantColorEffect();
+            Pixel[][] modifiedImage = effect.apply(inputImage, imageName, loggingService); // Replace this with actual modified image
 
             // ACTUAL WORK ENDS HERE
 

@@ -6,7 +6,7 @@ using namespace std;
 void applyDominantColor(vector<vector<Pixel>> &image)
 {
     unordered_map<int, int> hueFrequency;
-    int s = 10;
+    int s = 1;
     for (auto &row : image)
     {
         for (auto &pixel : row)
@@ -31,7 +31,7 @@ void applyDominantColor(vector<vector<Pixel>> &image)
             dominantHue = entry.first;
         }
     }
-
+    
     for (auto &row : image)
     {
         for (auto &pixel : row)
