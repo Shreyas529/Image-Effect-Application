@@ -1,11 +1,13 @@
 #include "DominantColor.h"
 #include "../Pixel.h"
-#include <bits/stdc++.h>
+#include <cmath>
+#include <unordered_map>
+#include <vector>
 using namespace std;
 
 void applyDominantColor(vector<vector<Pixel>> &image)
 {
-    unordered_map<int, int> hueFrequency;
+    unordered_map<int, unordered_map<int, int>> hueSaturationFrequency;
     int s = 1;
     for (auto &row : image)
     {
@@ -15,36 +17,45 @@ void applyDominantColor(vector<vector<Pixel>> &image)
             int Gvalue = pixel.g;
             int Bvalue = pixel.b;
             int HueValue = getHue(Rvalue, Gvalue, Bvalue);
+            int SaturationValue = getSaturation(Rvalue, Gvalue, Bvalue);
+
             HueValue = (int)(HueValue / s);
-            hueFrequency[HueValue]++;
+            SaturationValue = (int)(SaturationValue / s);
+
+            hueSaturationFrequency[HueValue][SaturationValue]++;
         }
     }
 
     int dominantHue = 0;
+    int dominantSaturation = 0;
     int maxFrequency = 0;
 
-    for (const auto &entry : hueFrequency)
+    for (const auto &hueEntry : hueSaturationFrequency)
     {
-        if (entry.second > maxFrequency)
+        for (const auto &saturationEntry : hueEntry.second)
         {
-            maxFrequency = entry.second;
-            dominantHue = entry.first;
+            if (saturationEntry.second > maxFrequency)
+            {
+                maxFrequency = saturationEntry.second;
+                dominantHue = hueEntry.first;
+                dominantSaturation = saturationEntry.first;
+            }
         }
     }
-    
+
     for (auto &row : image)
     {
         for (auto &pixel : row)
         {
-            hueToRgb(dominantHue, pixel.r, pixel.g, pixel.b);
+            hueSaturationToRgb(dominantHue, dominantSaturation, pixel.r, pixel.g, pixel.b);
         }
     }
 }
 
-void hueToRgb(double hue, int &red, int &green, int &blue)
+void hueSaturationToRgb(double hue, double saturation, int &red, int &green, int &blue)
 {
-    double c = 1.0;
-    double m = 0.0;
+    double c = (saturation / 100.0) * (1.0 - std::fabs(std::fmod(hue / 60.0, 2.0) - 1.0));
+    double m = (saturation / 100.0) * (1.0 - (c / (1.0 - std::fabs(2.0 * (hue / 60.0) - 1.0))));
     double x = c * (1.0 - std::fabs(std::fmod(hue / 60.0, 2.0) - 1.0));
 
     if (hue >= 0 && hue < 60)
@@ -83,6 +94,17 @@ void hueToRgb(double hue, int &red, int &green, int &blue)
         green = static_cast<int>((m) * 255);
         blue = static_cast<int>((x + m) * 255);
     }
+}
+
+int getSaturation(int red, int green, int blue)
+{
+    int maxVal = max(max(red, green), blue);
+    int minVal = min(min(red, green), blue);
+
+    if (maxVal == 0)
+        return 0;
+    else
+        return ((maxVal - minVal) / maxVal) * 100;
 }
 
 int getHue(int red, int green, int blue)
