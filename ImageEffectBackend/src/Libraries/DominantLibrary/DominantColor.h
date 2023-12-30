@@ -8,4 +8,6 @@ int getHue(int, int, int);
 int getSaturation(int, int, int);
 void hueSaturationToRgb(double, double, int &, int &, int &);
 
+void clamp(int &);
+
 #endif
