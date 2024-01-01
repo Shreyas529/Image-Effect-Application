@@ -171,7 +171,7 @@ $(SHARPEN_JNI_HEADER): $(SHARPEN_JAVA_SRC)
 	javac -cp ./src/main/java -h $(SHARPEN_LIBRARY_DESTINATION) $(SHARPEN_JAVA_SRC)
 
 $(DOMINANT_LIB_NAME): $(DOMINANT_CPP_SRC) $(DOMINANT_JNI_HEADER)
-	$(CC) -shared -o $@ $(DOMINANT_CPP_SRC) -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux
+	$(CC) -shared -o $@ $(DOMINANT_CPP_SRC) -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux -fPIC
 
 $(DOMINANT_JNI_HEADER): $(DOMINANT_JAVA_SRC)
 	javac -cp ./src/main/java -h $(DOMINANT_LIBRARY_DESTINATION) $(DOMINANT_JAVA_SRC)
