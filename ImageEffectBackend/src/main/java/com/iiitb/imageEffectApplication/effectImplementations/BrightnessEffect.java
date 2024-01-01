@@ -19,10 +19,11 @@ public class BrightnessEffect implements SingleValueParameterizableEffect{
     {
         ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Brightness Effect","amount = " + Float.toString(parameter));                                                      // modified image
         thread.start();
+        Pixel[][] result=BrightnessInterface.applyBrightness(image, parameter);
         while(thread.isAlive())
         {
 
         }
-        return BrightnessInterface.applyBrightness(image, parameter);
+        return result;
     }
 }

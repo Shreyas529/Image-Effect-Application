@@ -17,9 +17,10 @@ public class DominantColorEffect implements PhotoEffect {
     public Pixel[][] apply(Pixel[][] image, String filename, LoggingService logging) {
         ExecuteLoggingService thread = new ExecuteLoggingService(logging, filename, "Dominant Color Effect", "None");
         thread.start();
+        Pixel[][] result=DominantInterface.applyDominantColor(image);
         while (thread.isAlive()) {
         }
-        return DominantInterface.applyDominantColor(image);
+        return result;
     }
 
 }

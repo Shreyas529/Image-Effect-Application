@@ -22,7 +22,8 @@ public class ContrastEffect implements SingleValueParameterizableEffect{
     {
         ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Contrast Effect","Contrast value = " + Float.toString(parameter));                                                      // modified image
         thread.start();
+        Pixel[][] result=ContrastInterface.applyContrast(image, parameter);
         while(thread.isAlive()){}
-        return ContrastInterface.applyContrast(image, parameter);
+        return result;
     }
 }

@@ -14,8 +14,9 @@ public class SepiaEffect implements PhotoEffect{
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService){
         ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, fileName,"Sepia Effect","None");                                                      // modified image
         thread.start();
+        Pixel[][] result=SepiaInterface.applySepia(image);;
         while(thread.isAlive()){}
-        return SepiaInterface.applySepia(image);
+        return result;
     
         
     }

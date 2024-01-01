@@ -16,8 +16,9 @@ public class GaussianEffect implements SingleValueParameterizableEffect{
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService){
         ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, fileName,"Gaussion Blur Effect","Blur Radius = " + Float.toString(parameterValue));                                                      // modified image
         thread.start();
+        Pixel[][] result=GaussianBlurInterface.applyGaussianBlur(image, parameterValue);
         while(thread.isAlive()){}
-        return GaussianBlurInterface.applyGaussianBlur(image, parameterValue);
+        return result;
     }
     
 }

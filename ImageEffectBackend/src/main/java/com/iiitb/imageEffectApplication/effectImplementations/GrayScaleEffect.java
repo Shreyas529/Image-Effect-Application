@@ -16,8 +16,9 @@ public class GrayScaleEffect implements PhotoEffect{
         // System.out.println("In grayscaleeffect.jav in effect implementation");
         ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Grayscale Effect","None");                                                      // modified image
         thread.start();
+        Pixel[][] result=GrayscaleInterface.applyGrayscale(image);
         while(thread.isAlive()){}
-        return GrayscaleInterface.applyGrayscale(image);
+        return result;
     }
     
 }

@@ -18,7 +18,8 @@ public class SharpenEffect implements SingleValueParameterizableEffect{
     public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService){
         ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, fileName,"Sharpen Effect","Sharpen value = " + Float.toString(parameterValue));                                                      // modified image
         thread.start();
+        Pixel[][] result=SharpenInterface.applySharpen(image, parameterValue);
         while(thread.isAlive()){}
-        return SharpenInterface.applySharpen(image, parameterValue);
+        return result;
     }   
 }

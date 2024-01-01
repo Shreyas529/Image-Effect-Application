@@ -23,7 +23,8 @@ public class RotationEffect implements DiscreteEffect{
         // System.out.println("rotation?"+value);
         ExecuteLoggingService thread=new ExecuteLoggingService(logging, filename,"Rotation Effect","Rotation Value = " + Float.toString(value));                                                      // modified image
         thread.start();
+        Pixel[][] result=RotationInterface.applyRotation(image, this.value);
         while(thread.isAlive()){}
-        return RotationInterface.applyRotation(image, this.value);
+        return result;
     }
 }

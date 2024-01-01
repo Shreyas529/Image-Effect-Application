@@ -13,8 +13,9 @@ public class InvertEffect implements PhotoEffect{
         public Pixel[][] apply(Pixel[][] image, String fileName, LoggingService loggingService){
         ExecuteLoggingService thread=new ExecuteLoggingService(loggingService, fileName,"Invert Effect","None");                                                      // modified image
         thread.start();
+        Pixel[][] result=InvertInterface.applyInvert(image);
         while(thread.isAlive()){}
-        return InvertInterface.applyInvert(image);
+        return result;
     }
     
 }
