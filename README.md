@@ -5,7 +5,7 @@ IMT2022001 – Siddharth Menon: Rotation and Sharpen Effects
 
 IMT2022082 – Sathvik S Rao: Threading, gaussian blur,writing java objects to files
 
-IMT2022511 – K V Nikhilesh: Inversion,sepia and logging and displaying the logs of all the effects
+IMT2022511 – K V Nikhilesh: Inversion,sepia and logging and displaying the logs for all the effects
 
 IMT2022507 – Vishruth Vijay: Dominant colour, hue saturation Effects
 
